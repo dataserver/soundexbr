@@ -9,7 +9,7 @@ http://www.unibratec.com.br/jornadacientifica/diretorio/NOVOB.pdf
 function SoundexBR($word, $enc = 'UTF-8')
 {
 	$text = trim($word);
-	$accents = array(
+	$accents = [
 		'A' => '/&Agrave;|&Aacute;|&Acirc;|&Atilde;|&Auml;|&Aring;/',
 		'a' => '/&agrave;|&aacute;|&acirc;|&atilde;|&auml;|&aring;/',
 		'C' => '/&Ccedil;/',
@@ -28,10 +28,10 @@ function SoundexBR($word, $enc = 'UTF-8')
 		'y' => '/&yacute;|&yuml;/',
 		'a.' => '/&ordf;/',
 		'o.' => '/&ordm;/'
-	);
+	];
 	$text = preg_replace($accents, array_keys($accents), htmlentities($text, ENT_NOQUOTES, $enc));
 	$text = strtoupper($text);
-	$arr = array(
+	$arr = [
 		'I' => '/Y/',
 		'B' => '/BR|BL/',
 		'F' => '/PH/',
@@ -40,31 +40,27 @@ function SoundexBR($word, $enc = 'UTF-8')
 		'K' => '/Q|CA|CO|CU|C|CK/',
 		'L' => '/LH/',
 		'M' => '/N|RM|GM|MD|SM/'
-	);
+	];
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
 	if (substr(text, -2) == 'AO') {
 		$text = substr(text, 0, -2) . 'M';
 	}
-	$arr = array(
+	$arr = [
 		'N' => '/NH/',
 		'P' => '/PR/',
 //		'S' => '/Ç|CH|X|TS|C|Z|RS|CE|CI/',
 		'S' => '/Ç|X|TS|C|Z|RS/',
 		'T' => '/LT|TR|CT|RT|ST|TL/',
 		'V' => '/W/'
-	);
+	];
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
 	$r = substr($text, -1);
 	if ($r == 'S' || $r == 'Z' || $r == 'R' || $r == 'M' || $r == 'N' || $r == 'L' || (substr($text, -2) == 'AO')) {
-		if (substr(text, -2) == 'AO') {
-			$text = substr($text, 0, -2);
-		} else {
-			$text = substr($text, 0, -1);
-		}		
+		$text = (substr(text, -2) == 'AO') ? substr($text, 0, -2):  substr($text, 0, -1);
 	}
 	$text = str_replace('R','L', $text);
-	$search = array('A','E','I','O','U','H');
-	$replace = array('');
+	$search = ['A','E','I','O','U','H'];
+	$replace = [''];
 	$text = str_replace($search, $replace, $text);
 	$text = preg_replace('{( ?.)\1{2,}}','$1',$text);
 	return $text;
@@ -90,13 +86,10 @@ if (isset($_GET['text'])) {
 		}
 	}
 }
-
-//$text = 'KBBBSKKKK';
-//echo preg_replace('{( ?.)\1{2,}}','$1$1',$text);
 ?>
 <div align="center">
 	<fieldset><legend>Fonetica</legend>	
-	<form action="soundexbr2.php" method="get" name="phone">
+	<form action="soundexbr.php" method="get" name="phone">
 		<input name="text" type="text">
 	<br><br>
 	<input name="" type="submit" value="Enviar">

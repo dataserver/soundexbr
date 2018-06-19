@@ -12,7 +12,6 @@ function SoundexBR($word)
 
 	// 1 - Transformar em maiúscula
 	$word = strtoupper($word);
-	// echo $word;
 
 	// 2 - Eliminar todos os acentos das 'vogais'; 
 	$utf8 = [
@@ -24,14 +23,14 @@ function SoundexBR($word)
         '/[éèêë]/u'     => 'e',
         '/[ÍÌÎÏ]/u'     => 'I',
         '/[íìîï]/u'     => 'i',
-        // '/Ñ/'           => 'N',
-        // '/ñ/'           => 'n',
+        '/Ñ/'           => 'N',
+        '/ñ/'           => 'n',
         '/[ÓÒÔÕÖ]/u'    => 'O',
         '/[óòôõºö]/u'   => 'o',
         '/[úùûü]/u'     => 'u',
         '/[ÚÙÛÜ]/u'     => 'U',
-        // '/Ý/'           => 'Y',
-        // '/[ýÿ]/u'       => 'y',
+        '/Ý/'           => 'Y',
+        '/[ýÿ]/u'       => 'y',
         "/['\"`´]/"     => '',
         '/[’‘‹›‚]/u'    => '',
 		'/[“”«»„]/u'    => '',

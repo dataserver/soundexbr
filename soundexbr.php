@@ -5,12 +5,9 @@ FRED JORGE TAVARES DE LUCENA
 BUSCA FONÉTICA EM PORTUGUÊS DO BRASIL
 http://www.unibratec.com.br/jornadacientifica/diretorio/NOVOB.pdf
 
-charset = UTF-8
-
 */
 function SoundexBR($word, $enc = 'UTF-8')
 {
-
 	$text = trim($word);
 	$accents = array(
 		'A' => '/&Agrave;|&Aacute;|&Acirc;|&Atilde;|&Auml;|&Aring;/',
@@ -45,8 +42,7 @@ function SoundexBR($word, $enc = 'UTF-8')
 		'M' => '/N|RM|GM|MD|SM/'
 	);
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
-	if (substr(text, -2)=='AO')
-	{
+	if (substr(text, -2) == 'AO') {
 		$text = substr(text, 0, -2) . 'M';
 	}
 	$arr = array(
@@ -59,14 +55,10 @@ function SoundexBR($word, $enc = 'UTF-8')
 	);
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
 	$r = substr($text, -1);
-	if($r=='S' || $r=='Z' || $r=='R' || $r=='M' || $r=='N' || $r=='L' || (substr($text, -2) == 'AO'))
-	{
-		if(substr(text, -2) == 'AO')
-		{
+	if ($r == 'S' || $r == 'Z' || $r == 'R' || $r == 'M' || $r == 'N' || $r == 'L' || (substr($text, -2) == 'AO')) {
+		if (substr(text, -2) == 'AO') {
 			$text = substr($text, 0, -2);
-		}
-		else
-		{
+		} else {
 			$text = substr($text, 0, -1);
 		}		
 	}
@@ -86,27 +78,21 @@ function SoundexBR($word, $enc = 'UTF-8')
 <body>
 
 <?php
-
-if (isset($_GET['text']))
-{
+if (isset($_GET['text'])) {
 	$text = $_GET['text'];
 		
 	print "Texto: ".$text."<BR>";
-	
 	print "Resultado: ";
 	$arr = explode(' ', trim($text));
-	for($i=0, $y=sizeof($arr); $i<$y; $i++)
-	{
-		if (strlen($arr[$i])>3)
-		{
+	for($i=0, $y=sizeof($arr); $i < $y; $i++) {
+		if (strlen($arr[$i]) > 3) {
 			print soundexbr($arr[$i]).' ';
-			//soundexbr($arr[$i]).' ';
 		}
 	}
 }
 
-	//$text = 'KBBBSKKKK';
-	//echo preg_replace('{( ?.)\1{2,}}','$1$1',$text);
+//$text = 'KBBBSKKKK';
+//echo preg_replace('{( ?.)\1{2,}}','$1$1',$text);
 ?>
 <div align="center">
 	<fieldset><legend>Fonetica</legend>	

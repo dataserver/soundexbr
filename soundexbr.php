@@ -42,7 +42,7 @@ function SoundexBR($word, $enc = 'UTF-8')
 		'M' => '/N|RM|GM|MD|SM/'
 	];
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
-	if (substr(text, -2) == 'AO') {
+	if (substr($text, -2) == 'AO') {
 		$text = substr(text, 0, -2) . 'M';
 	}
 	$arr = [
@@ -56,13 +56,13 @@ function SoundexBR($word, $enc = 'UTF-8')
 	$text = preg_replace($arr, array_keys($arr), htmlentities($text, ENT_NOQUOTES, $enc));
 	$r = substr($text, -1);
 	if ($r == 'S' || $r == 'Z' || $r == 'R' || $r == 'M' || $r == 'N' || $r == 'L' || (substr($text, -2) == 'AO')) {
-		$text = (substr(text, -2) == 'AO') ? substr($text, 0, -2):  substr($text, 0, -1);
+		$text = (substr($text, -2) == 'AO') ? substr($text, 0, -2):  substr($text, 0, -1);
 	}
 	$text = str_replace('R','L', $text);
 	$search = ['A','E','I','O','U','H'];
 	$replace = [''];
 	$text = str_replace($search, $replace, $text);
-	$text = preg_replace('{( ?.)\1{2,}}','$1',$text);
+	$text = preg_replace('{( ?.)\1{2,}}', '$1', $text);
 	return $text;
 }
 ?>
@@ -72,28 +72,30 @@ function SoundexBR($word, $enc = 'UTF-8')
 <title>SoundexBR</title>
 </head>
 <body>
-
+<pre>
 <?php
 if (isset($_GET['text'])) {
 	$text = $_GET['text'];
 		
-	print "Texto: ".$text."<BR>";
-	print "Resultado: ";
+	echo "Origianal Texto: ". $text ."<br>";
+	echo "SoundexBR: ";
 	$arr = explode(' ', trim($text));
 	for($i=0, $y=sizeof($arr); $i < $y; $i++) {
 		if (strlen($arr[$i]) > 3) {
-			print soundexbr($arr[$i]).' ';
+			echo soundexbr($arr[$i]).' ';
 		}
 	}
 }
 ?>
+</pre>
 <div align="center">
-	<fieldset><legend>Fonetica</legend>	
 	<form action="soundexbr.php" method="get" name="phone">
+	<fieldset>
+		<legend>Fonetica</legend>	
 		<input name="text" type="text">
-	<br><br>
-	<input name="" type="submit" value="Enviar">
-	<input type="reset" value="Limpar">
+		<br><br>
+		<input name="" type="submit" value="Enviar">
+		<input type="reset" value="Limpar">
 	</form>
 	</fieldset>	
 </div>
